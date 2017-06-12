@@ -1,165 +1,206 @@
 CREATE TABLE user (
-id
-login
-password
-first_name
-last_name
-email_address
-date_created
-date_modified
+id int primary key auto_increment,
+login VARCHAR (50),
+password VARCHAR (50),
+first_name VARCHAR (50),
+last_name VARCHAR (50),
+email_address VARCHAR (256),
+date_created timestamp default current_timestamp,
+date_modifed timestamp default current_timestamp on update current_timestamp
+);
 
 CREATE TABLE address (
-id
-user_id
-address_line_1
-address_line_2
-city
-state
-postal_code
-country
-date_created
-date_modified
+id int primary key auto_increment,
+user_id int,
+address_line_1 VARCHAR (256),
+address_line_2 VARCHAR (256),
+city VARCHAR (50),
+state VARCHAR (10),
+postal_code VARCHAR (50),
+country VARCHAR (50),
+date_created timestamp default current_timestamp,
+date_modifed timestamp default current_timestamp on update current_timestamp,
+FOREIGN KEY (user_id) REFERENCES user(id)
+);
 
 CREATE TABLE access_user (
-id
-login
-password
-is_active
-date_created
-date_modified
+id int primary key auto_increment,
+login VARCHAR (50),
+password VARCHAR (50),
+is_active boolean,
+date_created timestamp default current_timestamp,
+date_modifed timestamp default current_timestamp on update current_timestamp
+);
 
 CREATE TABLE access_role (
-id
-name
-date_created
-date_modified
+id int primary key auto_increment,
+name VARCHAR (50),
+date_created timestamp default current_timestamp,
+date_modifed timestamp default current_timestamp on update current_timestamp
+);
 
 CREATE TABLE access_role_user (
-access_user_id
-access_role_id
-date_created
+access_user_id int,
+access_role_id int,
+FOREIGN KEY (access_user_id) REFERENCES access_user(id),
+FOREIGN KEY (access_role_id) REFERENCES access_role(id)
+);
 
 CREATE TABLE access_action (
-id
-access_user_id
-access_action_type
-id_value
-date_created
-date_modified
+id int primary key auto_increment,
+access_user_id int,
+access_action_type VARCHAR (50),
+id_value int,
+date_created timestamp default current_timestamp,
+date_modifed timestamp default current_timestamp on update current_timestamp,
+FOREIGN KEY (access_user_id) REFERENCES access_user(id)
+);
 
 CREATE TABLE tracking (
-id
-name
-description
-start_date
-end_date
-is_active
-date_created
-date_modified
+id int primary key auto_increment,
+name VARCHAR (256),
+description text,
+start_date DATE,
+end_date DATE,
+is_active boolean,
+date_created timestamp default current_timestamp,
+date_modifed timestamp default current_timestamp on update current_timestamp
+);
 
 CREATE TABLE orders (
-id
-order_number
-user_id
-access_user_id
-tracking_id
+id int primary key auto_increment,
+external_id int,
+user_id int,
+access_user_id int,
+tracking_id int,
+FOREIGN KEY (user_id) REFERENCES user(id),
+FOREIGN KEY (access_user_id) REFERENCES access_user(id),
+FOREIGN KEY (tracking_id) REFERENCES tracking(id)
+);
 
 CREATE TABLE manufacturer (
-id
-name
-date_created
-date_modified
+id int primary key auto_increment,
+name VARCHAR (256),
+date_created timestamp default current_timestamp,
+date_modifed timestamp default current_timestamp on update current_timestamp
+);
 
 CREATE TABLE item (
-id
-cat_number
-manufacturer_id
-name
-description
-price
-date_created
-date_modified
+id int primary key auto_increment,
+cat_number VARCHAR (50),
+manufacturer_id int,
+name VARCHAR (256),
+description text,
+price DECIMAL (10, 2),
+date_created timestamp default current_timestamp,
+date_modifed timestamp default current_timestamp on update current_timestamp
+);
 
 CREATE TABLE order_item (
-order_id
-item_id
-date_created
+order_id int,
+item_id int,
+FOREIGN KEY (order_id) REFERENCES orders(id),
+FOREIGN KEY (item_id) REFERENCES item(id)
+);
 
 CREATE TABLE product_category (
-id
-category_name
-category_description
-date_created
-date_modified
+id int primary key auto_increment,
+category_name VARCHAR (50),
+category_description text,
+date_created timestamp default current_timestamp,
+date_modifed timestamp default current_timestamp on update current_timestamp
+);
 
 CREATE TABLE item_product_category (
-item_id
-product_category_id
+item_id int,
+product_category_id int,
+FOREIGN KEY (item_id) REFERENCES item(id),
+FOREIGN KEY (product_category_id) REFERENCES product_category(id)
+);
 
 CREATE TABLE review (
-id
-user_id
-item_id
-rating
-description
-date_created
-date_modified
+id int primary key auto_increment,
+user_id int,
+item_id int,
+rating int,
+description text,
+date_created timestamp default current_timestamp,
+date_modifed timestamp default current_timestamp on update current_timestamp,
+FOREIGN KEY (user_id) REFERENCES user(id),
+FOREIGN KEY (item_id) REFERENCES item(id)
+);
 
 CREATE TABLE gift_card (
-id
-claimcode
-amount
-expired_date
-is_active
-date_created
-date_modified
+id int primary key auto_increment,
+claimcode VARCHAR (50),
+amount DECIMAL (10, 2),
+expired_date DATE,
+is_active boolean,
+date_created timestamp default current_timestamp,
+date_modifed timestamp default current_timestamp on update current_timestamp
+);
 
 CREATE TABLE order_gift_card (
-order_id
-gift_card_id
-date_created
+order_id int,
+gift_card_id int,
+FOREIGN KEY (order_id) REFERENCES orders(id),
+FOREIGN KEY (gift_card_id) REFERENCES gift_card(id)
+);
 
 CREATE TABLE order_status (
-id
-order_id
-status
-date_created
-date_modified
+id int primary key auto_increment,
+order_id int,
+status VARCHAR (50),
+date_created timestamp default current_timestamp,
+date_modifed timestamp default current_timestamp on update current_timestamp,
+FOREIGN KEY (order_id) REFERENCES orders(id)
+);
 
 CREATE TABLE order_adjustment (
-id
-order_id
-amount
-adjustment_type
-description
-date_created
-date_modified
+id int primary key auto_increment,
+order_id int,
+amount DECIMAL (10, 2),
+adjustment_type VARCHAR (50),
+description text,
+date_created timestamp default current_timestamp,
+date_modifed timestamp default current_timestamp on update current_timestamp,
+FOREIGN KEY (order_id) REFERENCES orders(id)
+);
 
 CREATE TABLE credit_card (
-id
-credit_card_type
-credit_card_number
-expiration_year
-expiration_month
-date_created
-date_modified
+id int primary key auto_increment,
+credit_card_type VARCHAR (50),
+credit_card_number VARCHAR (50),
+expiration_year int,
+expiration_month int,
+date_created timestamp default current_timestamp,
+date_modifed timestamp default current_timestamp on update current_timestamp
+);
 
 CREATE TABLE payment (
-id
-payment_type
-order_id
-credit_card_id
-gift_card_id
-amount
-date_created
-date_modified
+id int primary key auto_increment,
+payment_type VARCHAR (50),
+order_id int,
+credit_card_id int,
+gift_card_id int,
+amount DECIMAL (10, 2),
+date_created timestamp default current_timestamp,
+date_modifed timestamp default current_timestamp on update current_timestamp,
+FOREIGN KEY (order_id) REFERENCES orders(id),
+FOREIGN KEY (credit_card_id) REFERENCES credit_card(id),
+FOREIGN KEY (gift_card_id) REFERENCES gift_card(id)
+);
 
 CREATE TABLE session (
-id
-cookie
-user_id
-access_user_id
-order_id
-tracking_id
-date_created
-date_modified
+id int primary key auto_increment,
+cookie VARCHAR (50),
+user_id int,
+access_user_id int,
+order_id int,
+tracking_id int,
+date_created timestamp default current_timestamp,
+date_modifed timestamp default current_timestamp on update current_timestamp,
+FOREIGN KEY (user_id) REFERENCES user(id),
+FOREIGN KEY (access_user_id) REFERENCES access_user(id),
+FOREIGN KEY (tracking_id) REFERENCES tracking(id)
+);
