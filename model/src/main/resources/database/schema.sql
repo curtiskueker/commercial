@@ -11,7 +11,6 @@ date_modifed timestamp default current_timestamp on update current_timestamp
 
 CREATE TABLE address (
 id int primary key auto_increment,
-user_id int,
 address_line_1 VARCHAR (256),
 address_line_2 VARCHAR (256),
 city VARCHAR (50),
@@ -19,8 +18,14 @@ state VARCHAR (10),
 postal_code VARCHAR (50),
 country VARCHAR (50),
 date_created timestamp default current_timestamp,
-date_modifed timestamp default current_timestamp on update current_timestamp,
-FOREIGN KEY (user_id) REFERENCES user(id)
+date_modifed timestamp default current_timestamp on update current_timestamp
+);
+
+CREATE TABLE user_address (
+user_id int,
+address_id int,
+FOREIGN KEY (user_id) REFERENCES user(id),
+FOREIGN KEY (address_id) REFERENCES address(id)
 );
 
 CREATE TABLE access_user (
@@ -177,7 +182,7 @@ date_created timestamp default current_timestamp,
 date_modifed timestamp default current_timestamp on update current_timestamp
 );
 
-CREATE TABLE payment (
+CREATE TABLE order_payment (
 id int primary key auto_increment,
 payment_type VARCHAR (50),
 order_id int,
