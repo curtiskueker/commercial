@@ -2,14 +2,72 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>commercial</artifactId>
-        <groupId>org.curtis</groupId>
-        <version>1.0.0</version>
-    </parent>
+    <artifactId>view</artifactId>
+    <groupId>org.curtis</groupId>
+    <version>1.0.0</version>
+    <packaging>war</packaging>
+
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>view</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>org.curtis</groupId>
+            <artifactId>model</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.4.1</version>
+                <configuration>
+                    <followSymLinks>false</followSymLinks>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <warName>ROOT</warName>
+                    <webResources>
+                        <resource>
+                            <directory>${project.basedir}/src/main/view/</directory>
+                            <targetPath></targetPath>
+                            <filtering>true</filtering>
+                        </resource>
+                        <resource>
+                            <directory>${project.basedir}/src/main/webinf/</directory>
+                            <targetPath>WEB-INF</targetPath>
+                            <filtering>false</filtering>
+                        </resource>
+                        <resource>
+                            <directory>${project.basedir}/src/main/metainf/</directory>
+                            <targetPath>WEB-INF/classes/META-INF</targetPath>
+                            <filtering>false</filtering>
+                        </resource>
+                    </webResources>
+                    <archive>
+                        <manifestEntries>
+                            <Specification-Title>coommercial</Specification-Title>
+                            <Specification-Version>${project.version}</Specification-Version>
+                            <Implementation-Title>${project.groupId}.${project.artifactId}</Implementation-Title>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
