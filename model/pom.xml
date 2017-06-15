@@ -12,7 +12,26 @@
     <artifactId>model</artifactId>
     <packaging>jar</packaging>
     <build>
-        <finalName>commercial-model</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>/src/main/resources</directory>
+                <excludes>
+                    <exclude>database/**</exclude>
+                </excludes>
+            </resource>
+        </resources>
     </build>
 
     <properties>
