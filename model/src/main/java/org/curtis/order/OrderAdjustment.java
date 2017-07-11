@@ -1,11 +1,13 @@
 package org.curtis.order;
 
+import org.curtis.database.DatedDatabaseItem;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "order_adjustment")
-public class OrderAdjustment {
+public class OrderAdjustment extends DatedDatabaseItem {
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
