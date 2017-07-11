@@ -3,25 +3,16 @@ package org.curtis.filter;
 import org.curtis.properties.AppProperties;
 import org.curtis.properties.PropertyFileNotFoundException;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class AppFilter implements Filter {
+public class AppFilter extends BaseFilter {
     private static boolean appPropertiesLoaded = false;
 
-    public void init(FilterConfig config) {
-
-    }
-
-    public void destroy() {
-    }
-
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+    public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         if(!appPropertiesLoaded) {
             try {

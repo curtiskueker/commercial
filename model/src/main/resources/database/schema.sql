@@ -6,7 +6,7 @@ first_name VARCHAR (50),
 last_name VARCHAR (50),
 email_address VARCHAR (256),
 date_created timestamp default current_timestamp,
-date_modifed timestamp default current_timestamp on update current_timestamp
+date_modified timestamp default current_timestamp on update current_timestamp
 );
 
 CREATE TABLE address (
@@ -18,7 +18,7 @@ state VARCHAR (10),
 postal_code VARCHAR (50),
 country VARCHAR (50),
 date_created timestamp default current_timestamp,
-date_modifed timestamp default current_timestamp on update current_timestamp
+date_modified timestamp default current_timestamp on update current_timestamp
 );
 
 CREATE TABLE user_address (
@@ -34,14 +34,14 @@ login VARCHAR (50),
 password VARCHAR (50),
 is_active boolean,
 date_created timestamp default current_timestamp,
-date_modifed timestamp default current_timestamp on update current_timestamp
+date_modified timestamp default current_timestamp on update current_timestamp
 );
 
 CREATE TABLE access_role (
 id int primary key auto_increment,
 name VARCHAR (50),
 date_created timestamp default current_timestamp,
-date_modifed timestamp default current_timestamp on update current_timestamp
+date_modified timestamp default current_timestamp on update current_timestamp
 );
 
 CREATE TABLE access_role_user (
@@ -57,7 +57,7 @@ access_user_id int,
 access_action_type VARCHAR (50),
 id_value int,
 date_created timestamp default current_timestamp,
-date_modifed timestamp default current_timestamp on update current_timestamp,
+date_modified timestamp default current_timestamp on update current_timestamp,
 FOREIGN KEY (access_user_id) REFERENCES access_user(id)
 );
 
@@ -69,7 +69,7 @@ start_date DATE,
 end_date DATE,
 is_active boolean,
 date_created timestamp default current_timestamp,
-date_modifed timestamp default current_timestamp on update current_timestamp
+date_modified timestamp default current_timestamp on update current_timestamp
 );
 
 CREATE TABLE orders (
@@ -87,7 +87,7 @@ CREATE TABLE manufacturer (
 id int primary key auto_increment,
 name VARCHAR (256),
 date_created timestamp default current_timestamp,
-date_modifed timestamp default current_timestamp on update current_timestamp
+date_modified timestamp default current_timestamp on update current_timestamp
 );
 
 CREATE TABLE item (
@@ -98,7 +98,7 @@ name VARCHAR (256),
 description text,
 price DECIMAL (10, 2),
 date_created timestamp default current_timestamp,
-date_modifed timestamp default current_timestamp on update current_timestamp
+date_modified timestamp default current_timestamp on update current_timestamp
 );
 
 CREATE TABLE order_item (
@@ -113,7 +113,7 @@ id int primary key auto_increment,
 category_name VARCHAR (50),
 category_description text,
 date_created timestamp default current_timestamp,
-date_modifed timestamp default current_timestamp on update current_timestamp
+date_modified timestamp default current_timestamp on update current_timestamp
 );
 
 CREATE TABLE item_product_category (
@@ -130,7 +130,7 @@ item_id int,
 rating int,
 description text,
 date_created timestamp default current_timestamp,
-date_modifed timestamp default current_timestamp on update current_timestamp,
+date_modified timestamp default current_timestamp on update current_timestamp,
 FOREIGN KEY (user_id) REFERENCES user(id),
 FOREIGN KEY (item_id) REFERENCES item(id)
 );
@@ -142,7 +142,7 @@ amount DECIMAL (10, 2),
 expired_date DATE,
 is_active boolean,
 date_created timestamp default current_timestamp,
-date_modifed timestamp default current_timestamp on update current_timestamp
+date_modified timestamp default current_timestamp on update current_timestamp
 );
 
 CREATE TABLE order_gift_card (
@@ -157,7 +157,7 @@ id int primary key auto_increment,
 order_id int,
 status VARCHAR (50),
 date_created timestamp default current_timestamp,
-date_modifed timestamp default current_timestamp on update current_timestamp,
+date_modified timestamp default current_timestamp on update current_timestamp,
 FOREIGN KEY (order_id) REFERENCES orders(id)
 );
 
@@ -168,7 +168,7 @@ amount DECIMAL (10, 2),
 adjustment_type VARCHAR (50),
 description text,
 date_created timestamp default current_timestamp,
-date_modifed timestamp default current_timestamp on update current_timestamp,
+date_modified timestamp default current_timestamp on update current_timestamp,
 FOREIGN KEY (order_id) REFERENCES orders(id)
 );
 
@@ -179,7 +179,7 @@ credit_card_number VARCHAR (50),
 expiration_year int,
 expiration_month int,
 date_created timestamp default current_timestamp,
-date_modifed timestamp default current_timestamp on update current_timestamp
+date_modified timestamp default current_timestamp on update current_timestamp
 );
 
 CREATE TABLE order_payment (
@@ -190,7 +190,7 @@ credit_card_id int,
 gift_card_id int,
 amount DECIMAL (10, 2),
 date_created timestamp default current_timestamp,
-date_modifed timestamp default current_timestamp on update current_timestamp,
+date_modified timestamp default current_timestamp on update current_timestamp,
 FOREIGN KEY (order_id) REFERENCES orders(id),
 FOREIGN KEY (credit_card_id) REFERENCES credit_card(id),
 FOREIGN KEY (gift_card_id) REFERENCES gift_card(id)
@@ -204,7 +204,7 @@ access_user_id int,
 order_id int,
 tracking_id int,
 date_created timestamp default current_timestamp,
-date_modifed timestamp default current_timestamp on update current_timestamp,
+date_modified timestamp default current_timestamp on update current_timestamp,
 FOREIGN KEY (user_id) REFERENCES user(id),
 FOREIGN KEY (access_user_id) REFERENCES access_user(id),
 FOREIGN KEY (tracking_id) REFERENCES tracking(id)
