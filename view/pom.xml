@@ -65,7 +65,7 @@
                     </webResources>
                     <archive>
                         <manifestEntries>
-                            <Specification-Title>coommercial</Specification-Title>
+                            <Specification-Title>commercial</Specification-Title>
                             <Specification-Version>${project.version}</Specification-Version>
                             <Implementation-Title>${project.groupId}.${project.artifactId}</Implementation-Title>
                         </manifestEntries>
